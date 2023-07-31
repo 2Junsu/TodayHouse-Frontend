@@ -4,6 +4,13 @@ const storyReducer = createSlice({
     name: "storyReducer",
     initialState: {
         selectedCategoryList: [],
+        scrapCount: 0,
+        isScraped: false,
+        commentCount: 0,
+        viewCount: 0,
+        likeCount: 0,
+        isFollowing: false,
+        writerId: 0,
     },
     reducers: {
         changeCategoryList: (state, action) => {
@@ -45,9 +52,38 @@ const storyReducer = createSlice({
         resetCategory: (state, action) => {
             return { ...state, selectedCategoryList: [] };
         },
+        setCount: (state, action) => ({
+            ...state,
+            [action.payload.name]: action.payload.count,
+        }),
+        handleIsScraped: (state, action) => ({
+            ...state,
+            isScraped: action.payload,
+        }),
+        handleIsFollowing: (state, action) => ({
+            ...state,
+            isFollowing: action.payload,
+        }),
+        setWriterId: (state, action) => {
+            localStorage.setItem(
+                "storyWriterId",
+                JSON.stringify(action.payload)
+            );
+            return {
+                ...state,
+                writerId: action.payload,
+            };
+        },
     },
 });
 
-export const { changeCategoryList, deleteCategory, resetCategory } =
-    storyReducer.actions;
+export const {
+    changeCategoryList,
+    deleteCategory,
+    resetCategory,
+    setCount,
+    handleIsScraped,
+    handleIsFollowing,
+    setWriterId,
+} = storyReducer.actions;
 export default storyReducer;
