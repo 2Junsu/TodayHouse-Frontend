@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import Navbar from './Navbar';
-import SubNavbar from './SubNavbar';
-import { Outlet, Route, Routes } from 'react-router-dom';
-import Advices from '../Advices/Advices';
-import { connect } from 'react-redux';
-import $ from 'jquery';
+import React, { useState } from "react";
+import styled from "styled-components";
+import Navbar from "./Navbar";
+import SubNavbar from "./SubNavbar";
+import { Outlet, Route, Routes } from "react-router-dom";
+import Advices from "../Advices/Advices";
+import { connect } from "react-redux";
+import $ from "jquery";
 
 const Main = ({ selPage }) => {
   const navOver = () => {
-    $(`#subNavBar`).css('display', 'flex');
+    $(`#subNavBar`).css("display", "flex");
     didScroll = false;
   };
   const navOut = () => {
-    $(`#subNavBar`).css('display', 'none');
+    $(`#subNavBar`).css("display", "none");
   };
   var didScroll;
   window.onscroll = function (e) {
@@ -29,13 +29,13 @@ const Main = ({ selPage }) => {
 
   return (
     <>
-    <NavBarContainer onMouseOver={navOver}>
-      <Navbar />
-      <SubNavbar />
-    </NavBarContainer>
-    <Container>
-      <Outlet />
-    </Container>
+      <NavBarContainer onMouseOver={navOver}>
+        <Navbar />
+        <SubNavbar />
+      </NavBarContainer>
+      <Container>
+        <Outlet />
+      </Container>
     </>
   );
 };
@@ -46,21 +46,15 @@ function mapStateToProps(state, ownProps) {
 }
 export default connect(mapStateToProps)(Main);
 const Container = styled.div`
-  width: 80%;
-  background-color: pink;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  //align-items: center;
+  align-items: center;
 `;
 const NavBarContainer = styled.div`
-  background-color: lightyellow;
+  background-color: white;
   position: sticky;
   top: 0;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
+  width: 100vw;
 `;
-
