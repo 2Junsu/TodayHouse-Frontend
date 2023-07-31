@@ -52,7 +52,8 @@ const Review = (props) => {
     const [ratingNum, setRatingNum] = useState(0); //리뷰 평점 수
 
     const [rating, setRating] = useState(0);
-    const [modalImg, setModalImg] = useState([]);
+    const [previewImg, setPreviewImg] = useState("");
+    const [modalImg, setModalImg] = useState("");
     const [content, setContent] = useState("");
 
     const [totalItemsCount, setTotalItemsCount] = useState(0);
@@ -68,7 +69,7 @@ const Review = (props) => {
     const closeModal = () => {
         setModalOpen(false);
         setRating(0);
-        setModalImg([]);
+        setPreviewImg("");
     };
 
     const handleRating = (e) => {
@@ -77,13 +78,12 @@ const Review = (props) => {
 
     const handleModalImg = (e) => {
         const img = URL.createObjectURL(e.target.files[0]);
-        let list = [];
-        list.push(img);
-        setModalImg(list);
+        setPreviewImg(img);
+        setModalImg(e.target.files[0]);
     };
 
     const removeModalImg = () => {
-        setModalImg([]);
+        setPreviewImg("");
     };
 
     const handleContent = (e) => {
@@ -124,7 +124,8 @@ const Review = (props) => {
                             alert("리뷰가 등록되었습니다.");
                         }
                         closeModal();
-                        getReviews();
+                        getReviews(page);
+                        getReviewRatings();
                     })
                     .catch((e) => {
                         alert(e.response.data.message);
@@ -182,7 +183,7 @@ const Review = (props) => {
             .catch((e) => {
                 console.log(e);
             });
-        getReviews();
+        getReviews(page);
         getReviewRatings();
     }, []);
 
@@ -393,14 +394,15 @@ const Review = (props) => {
                             <ModalImageContainer>
                                 <ModalText>사진 첨부 (선택)</ModalText>
                                 <span>사진을 첨부해주세요. (최대 1장)</span>
-                                {modalImg.length !== 0 ? (
+                                {previewImg.length !== 0 ? (
                                     <ModalImgView>
                                         <ModalImgRemoveBtn
+                                            type="button"
                                             onClick={removeModalImg}>
                                             삭제
                                         </ModalImgRemoveBtn>
                                         <ModalImg
-                                            src={modalImg}
+                                            src={previewImg}
                                             alt="modalImg"
                                         />
                                     </ModalImgView>
